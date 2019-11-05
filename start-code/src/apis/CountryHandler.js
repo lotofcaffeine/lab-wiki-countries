@@ -7,9 +7,7 @@ class CountryHandler {
   values = () => {
     return this.data;
   };
-  getOne = () => {
-    return this.data[1];
-  };
+
   searchBy = term => {
     if (term === "") {
       return this.data;
@@ -18,8 +16,6 @@ class CountryHandler {
       let realName = name.official.toLocaleLowerCase();
       return realName.includes(term);
     });
-
-    console.log(response);
     return response;
   };
 

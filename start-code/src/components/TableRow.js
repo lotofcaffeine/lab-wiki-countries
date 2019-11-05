@@ -1,17 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class TableRow extends Component {
-  onSelected = e => {
-    e.preventDefault();
-    this.props.getFlag(this.props.border);
-  };
   render() {
     return (
-      <div>
-        <a onClick={this.onSelected} href="">
+      <li>
+        <Link key={this.props.border} to={`/${this.props.border}`}>
           {this.props.border}
-        </a>
-      </div>
+        </Link>
+      </li>
     );
   }
 }

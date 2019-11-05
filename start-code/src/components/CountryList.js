@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import CountryItem from "./CountryItem";
 
 class CountryList extends Component {
-  renderCountries = array => {
-    const countries = array.map((item, i) => (
-      <CountryItem
-        item={item}
-        key={i}
-        selectedCountry={this.props.selectedCountry}
-      ></CountryItem>
-    ));
-    return countries;
-  };
   render() {
-    return <>{this.renderCountries(this.props.array)}</>;
+    return (
+      <>
+        {this.props.array.map((item, i) => (
+          <CountryItem
+            item={item}
+            key={i}
+            selectedCountry={this.props.selectedCountry}
+          ></CountryItem>
+        ))}
+      </>
+    );
   }
 }
 export default CountryList;

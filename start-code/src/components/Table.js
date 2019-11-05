@@ -1,20 +1,36 @@
 import React, { Component } from "react";
 import TableRow from "./TableRow";
+import CountryHandler from "../apis/CountryHandler";
 
 class Table extends Component {
-  renderTableRow = objItem => {
-    const countries = objItem.borders.map((border, i) => (
-      <TableRow border={border} key={i} getFlag={this.props.getFlag}></TableRow>
+  api = new CountryHandler();
+
+  state = {
+    country: "",
+    objSelected: this.api.getCountryBy(this.props.match.params.id)
+  };
+  getFlag = flag => {
+    return this.api.getCountryBy(flag);
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.match.params.id !== this.state.objSelected.cca3) {
+      this.setState({ objSelected: this.getFlag(this.props.match.params.id) });
+    }
+  };
+
+  renderTableRow = () => {
+    const countries = this.state.objSelected.borders.map((border, i) => (
+      <TableRow border={border} key={border}></TableRow>
     ));
     return countries;
   };
-  componentDidUpdate = () => {};
 
   render() {
-    const { capital, area } = this.props.item;
+    const { capital, area, name, region } = this.state.objSelected;
     return (
       <div className="col-7">
-        <h1></h1>
+        <h1> {name.official}</h1>
 
         <table className="table">
           <thead></thead>
@@ -22,6 +38,10 @@ class Table extends Component {
             <tr>
               <td style={{ width: "30%" }}>Capital</td>
               <td>{capital[0]}</td>
+            </tr>
+            <tr>
+              <td style={{ width: "30%" }}>Region</td>
+              <td>{region}</td>
             </tr>
             <tr>
               <td>Area</td>
@@ -33,7 +53,7 @@ class Table extends Component {
             <tr>
               <td>Borders</td>
               <td>
-                <ul>{this.renderTableRow(this.props.item)}</ul>
+                <ul>{this.renderTableRow()}</ul>
               </td>
             </tr>
           </tbody>
